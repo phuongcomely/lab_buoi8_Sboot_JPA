@@ -1,0 +1,14 @@
+img {
+    max-width: 100%;
+}
+.movie-item img{
+    height: 250px;
+    object-fit: cover;
+
+}
+/*.rating-avatar img{*/
+/*    height: 50px;*/
+/*    width: 50px;*/
+/*    object-fit: cover;*/
+/*    border-radius: 50%;*/
+/*}*/
