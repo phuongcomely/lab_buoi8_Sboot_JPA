@@ -47,7 +47,7 @@
     <div class="container">
         <h3 class="mb-3">Danh sách phim lẻ</h3>
         <div  class="row ">
-            <div th:each="m : ${movies1}" class="col-2">
+            <div th:each="m : ${pageData.getContent()}" class="col-2">
                 <div class="movie-item">
                     <img class="rounded w-100"
                          th:src="${m.poster}" alt="">
@@ -56,19 +56,26 @@
 
             </div>
         </div>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
-        </nav>
+        <div class="d-flex justify-content-center mt-4" id="pagination" th:if="${pageData.getTotalPages()>1}">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item " th:classappend="${currentPage==1 ? 'disabled':''} ">
+                        <a class="page-link" th:href="@{/phim-le (page = ${currentPage -1} )}">Previous</a>
+                    </li>
+                    <li class="page-item"
+                    th:each="pageNumber : ${#numbers.sequence(1, pageData.getTotalPages())}"
+                    th:classappend="${pageNumber == currentPage ? 'active' : ''}">
+                        <a class="page-link" th:href="@{/phim-le (page=${pageNumber})}" th:text="${pageNumber}">1</a>
+                    </li>
+                    <li class="page-item"
+                    th:classappend="${currentPage == pageData.getTotalPages() ? 'disabled' : ''}">
+                        <a class="page-link"  th:href="@{/phim-le ( page=${currentPage + 1})}">2</a>
+                    </li>
+
+
+                </ul>
+            </nav>
+        </div>
 
     </div>
 </section>

@@ -78,7 +78,7 @@
 
     </section>
     <section class="container mt-2 mb-4">
-        <h4 class="mb-2"> Tap phim </h4>
+        <h4 class="mb-2"> Tập phim </h4>
         <button class="btn btn-primary bg-dark" type="submit">Tap 1</button>
         <button class="btn btn-primary bg-dark" type="submit">Tap 2</button>
         <button class="btn btn-primary bg-dark" type="submit">Tap 3</button>
@@ -87,6 +87,20 @@
         <button class="btn btn-primary bg-dark" type="submit">Tap 6</button>
 
 
+    </section>
+    <section class="py-4">
+        <div class="container">
+            <h3 class="mb-3">Phim de xuat</h3>
+            <div class="row">
+                <div th:each="movie : ${relatedMovies}" class="col-2">
+                    <div class="movie-item bg-body-tertiary p-3 rouder mb-4">
+                        <img class="rounded w-100"
+                             th:src="${movie.poster}" alt="">
+                        <p class="mt-2" th:text="${movie.title}">Thần ẩn</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
     <section class="container mt-2 mb-2">
         <h4  class="mb-2"> Binh luan </h4>
@@ -189,57 +203,7 @@
 
 
     </section>
-    <section class="py-4">
-        <div class="container">
-            <h3 class="mb-3">Phim de xuat</h3>
-            <div class="row">
-                <div class="col-2">
-                    <div class="movie-item bg-body-tertiary p-3 rouder mb-4">
-                        <img class="rounded w-100"
-                             src="https://motphimw.com/wp-content/uploads/2023/12/Than-An.jpg" alt="">
-                        <p class="mt-2">Thần ẩn</p>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="movie-item bg-body-tertiary p-3 rouder mb-4">
-                        <img class="rounded w-100"
-                             src="https://motphimw.com/wp-content/uploads/2023/12/Than-An.jpg" alt="">
-                        <p class="mt-2">Thần ẩn</p>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="movie-item bg-body-tertiary p-3 rouder mb-4">
-                        <img class="rounded w-100"
-                             src="https://motphimw.com/wp-content/uploads/2023/12/Than-An.jpg" alt="">
-                        <p class="mt-2">Thần ẩn</p>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="movie-item bg-body-tertiary p-3 rouder mb-4">
-                        <img class="rounded w-100"
-                             src="https://motphimw.com/wp-content/uploads/2023/12/Than-An.jpg" alt="">
-                        <p class="mt-2">Thần ẩn</p>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="movie-item bg-body-tertiary p-3 rouder mb-4">
-                        <img class="rounded w-100"
-                             src="https://motphimw.com/wp-content/uploads/2023/12/Than-An.jpg" alt="">
-                        <p class="mt-2">Thần ẩn</p>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="movie-item bg-body-tertiary p-3 rouder mb-4">
-                        <img class="rounded w-100"
-                             src="https://motphimw.com/wp-content/uploads/2023/12/Than-An.jpg" alt="">
-                        <p class="mt-2">Thần ẩn</p>
-                    </div>
-                </div>
-            </div>
 
-
-        </div>
-    </section>
 
     <footer class="bg-dark py-4 text-white">
     <div class="container">
