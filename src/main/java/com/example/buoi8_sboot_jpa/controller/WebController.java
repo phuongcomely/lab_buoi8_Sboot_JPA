@@ -1,10 +1,12 @@
 package com.example.buoi8_sboot_jpa.controller;
 
+import com.example.buoi8_sboot_jpa.entity.Blog;
 import com.example.buoi8_sboot_jpa.entity.Movie;
 import com.example.buoi8_sboot_jpa.model.enums.MovieType;
+import com.example.buoi8_sboot_jpa.repository.BlogRepository;
 import com.example.buoi8_sboot_jpa.repository.MovieRepository;
+import com.example.buoi8_sboot_jpa.service.BlogService;
 import com.example.buoi8_sboot_jpa.service.WebService;
-import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.SimpleTimeZone;
 
 
 //Định nghĩa 3 controller để xử lý các request từ client:
@@ -30,42 +33,26 @@ public class WebController {
     @Autowired
     private WebService webService;
 
+    @Autowired
+    private BlogService blogService;
+
+
     @GetMapping("/")
     public String getHomePage(Model model){
         Page<Movie> pageDataPhimHot = webService.getHotMovies(true, 1, 8);
         Page<Movie> pageDataPhimLe = webService.getMovieByType(MovieType.PHIM_LE, true, 1, 6);
         Page<Movie> pageDataPhimBo = webService.getMovieByType(MovieType.PHIM_BO, true, 1, 6);
         Page<Movie> pageDataPhimChieuRap = webService.getMovieByType(MovieType.PHIM_CHIEU_RAP, true, 1, 6);
+        Page<Blog> pageDataBlog =  blogService.getByStatusAndOrderByPublishedAtDesc(true, 1, 4);
 
         model.addAttribute(" ", pageDataPhimHot.getContent());
         model.addAttribute("listPhimLe", pageDataPhimLe.getContent());
-        model.addAttribute("listPhimBo", pageDataPhimLe.getContent());
-        model.addAttribute("listPhimChieuRap", pageDataPhimLe.getContent());
+        model.addAttribute("listPhimBo", pageDataPhimBo.getContent());
+        model.addAttribute("listPhimChieuRap", pageDataPhimChieuRap.getContent());
+        model.addAttribute("listBlog", pageDataBlog.getContent());
         return ("web/index");
     }
 
-//    @GetMapping("/phim-bo")
-//    public String findByPhimbo(Model model){
-//        List<Movie> movies = movieRepository.findByTypeAndStatusOrderByPublishedAtDesc( MovieType.PHIM_BO, true);
-//
-//        model.addAttribute("movies", movies );
-//        return "web/phim-bo";
-//    }
-//    @GetMapping("/phim-le")
-//    public String findByPhimle(Model model){
-//        List<Movie> movies1 = movieRepository.findByTypeAndStatusOrderByPublishedAtDesc( MovieType.PHIM_LE, true);
-//
-//        model.addAttribute("movies1", movies1 );
-//        System.out.println(movies1.size());
-//        return "web/phim-le";
-//    }
-//    @GetMapping("/phim-chieu-rap")
-//    public String findByPhimchieurap(Model model){
-//        List<Movie> movies2 = movieRepository.findByTypeAndStatusOrderByPublishedAtDesc( MovieType.PHIM_CHIEU_RAP, true);
-//
-//        model.addAttribute("movies2", movies2 );
-//        return "web/phim-chieu-rap";
-//    }
     @GetMapping("/phim/{id}/{slug}")
     public String findById(Model model, @PathVariable int id,   @PathVariable String slug,  @RequestParam (required = false, defaultValue = "1") Integer page,
                            @RequestParam(required = false, defaultValue = "6") Integer size){
@@ -75,7 +62,7 @@ public class WebController {
         if (optionalMovie.isPresent()) {
             Movie movie = optionalMovie.get();
 
-            List<Movie> relatedMovies = webService.getMovieByType(movie.getType(), page, size);
+            List<Movie> relatedMovies = webService.getByTypeAndStatusAndRatingGreaterThanEqualAndIdNotOrderByRatingDescViewDescPublishedAtDesc(movie.getType(),true,8,movie.getId(), page,size);
             model.addAttribute("movie", movie);
             model.addAttribute("relatedMovies", relatedMovies);
             return "web/Movie-detail";
@@ -104,4 +91,25 @@ public class WebController {
         return "web/phim-chieu-rap";
     }
 
+    @GetMapping("/blog")
+    public String getBlog(Model model, @RequestParam (required = false, defaultValue = "1") Integer page,
+                          @RequestParam(required = false, defaultValue = "12") Integer size){
+        Page<Blog> blogData = blogService.getByStatus(true, page, size);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("blogData", blogData);
+
+     return "/web/Blog";
+    }
+
+    @GetMapping("/tin-tuc/{id}/{slug}")
+    public String getById(Model model, @PathVariable int id,   @PathVariable String slug){
+        Optional<Blog> optionalBlog = blogService.getByStatusAndIdAndSlug(true, id, slug);
+        if (optionalBlog.isPresent()) {
+           Blog blog = optionalBlog.get();
+            model.addAttribute("blog", blog);
+            return "web/Blog-detail";
+        } else {
+            return "web/Blog-not-found"; // Điều hướng đến trang thông báo không tìm thấy nếu không có phim
+        }
+    }
 }

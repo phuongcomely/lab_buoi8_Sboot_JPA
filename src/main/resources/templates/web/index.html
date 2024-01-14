@@ -96,55 +96,13 @@
 </section>
 <section class="py-4">
     <div class="container">
-        <h3 class="mb-3">Tin tưc</h3>
+        <h3 class="mb-3">Tin tức</h3>
         <div class="row">
-            <div class="col-6">
+            <div th:each="b : ${listBlog}" class="col-6">
                 <div class="blog-item bg-body-tertiary p-3 rouder mb-4">
-                    <h5> 15 bộ phim Netflix được xem nhiều nhất từ trước tới nay</h5>
-                    <p class="fst-italic"> MotphimOctober 8, 2023</p>
-                    <p>15 bộ phim Netflix được xem nhiều nhất từ trước tới nay
-                        Motphim October 8, 2023
-                        Là một trong những dịch vụ xem phim phổ biến và thành công nhất trên thế giới vào lúc này,
-                        Netflix rõ ràng đã biết cách tạo nên tên tuổi cho mình theo năm tháng. Kể từ khi được thành lập
-                        vào năm 1997, Netflix đã phát triển từ dạng dịch vụ cho thuê phim và TV show gửi qua thư tín cho
-                        tới dịch vụ stream dễ tiếp cận mà chúng ta có ngày nay. Vì phổ biến tại nhiều nơi trên thế giới,
-                        Netflix đã trở thành một nền tảng “cần tìm đến” khi mọi người muốn bàn luận, xem phim hoặc TV
-                        show chất lượng cao.</p>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="blog-item bg-body-tertiary p-3 rouder mb-4">
-                    <h5> 15 bộ phim Netflix được xem nhiều nhất từ trước tới nay</h5>
-                    <p class="fst-italic"> MotphimOctober 8, 2023</p>
-                    <p>15 bộ phim Netflix được xem nhiều nhất từ trước tới nay
-                        Motphim October 8, 2023
-                        Là một trong những dịch vụ xem phim phổ biến và thành công nhất trên thế giới vào lúc này,
-                        Netflix rõ ràng đã biết cách tạo nên tên tuổi cho mình theo năm tháng. Kể từ khi được thành lập
-                        vào năm 1997, Netflix đã phát triển từ dạng dịch vụ cho thuê phim và TV show gửi qua thư tín cho
-                        tới dịch vụ stream dễ tiếp cận mà chúng ta có ngày nay. Vì phổ biến tại nhiều nơi trên thế giới,
-                        Netflix đã trở thành một nền tảng “cần tìm đến” khi mọi người muốn bàn luận, xem phim hoặc TV
-                        show chất lượng cao.</p>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="blog-item bg-body-tertiary p-3 rouder mb-4">
-                    <h5> 15 bộ phim Netflix được xem nhiều nhất từ trước tới nay</h5>
-                    <p class="fst-italic"> MotphimOctober 8, 2023</p>
-                    <p>15 bộ phim Netflix được xem nhiều nhất từ trước tới nay
-                        Motphim October 8, 2023
-                        Là một trong những dịch vụ xem phim phổ biến và thành công nhất trên thế giới vào lúc này,
-                        Netflix rõ ràng đã biết cách tạo nên tên tuổi cho mình theo năm tháng. Kể từ khi được thành lập
-                        vào năm 1997, Netflix đã phát triển từ dạng dịch vụ cho thuê phim và TV show gửi qua thư tín cho
-                        tới dịch vụ stream dễ tiếp cận mà chúng ta có ngày nay. Vì phổ biến tại nhiều nơi trên thế giới,
-                        Netflix đã trở thành một nền tảng “cần tìm đến” khi mọi người muốn bàn luận, xem phim hoặc TV
-                        show chất lượng cao.</p>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="blog-item bg-body-tertiary p-3 rouder mb-4">
-                    <h5> 15 bộ phim Netflix được xem nhiều nhất từ trước tới nay</h5>
-                    <p class="fst-italic"> MotphimOctober 8, 2023</p>
-                    <p>15 bộ phim Netflix được xem nhiều nhất từ trước tới nay
+                    <h5 th:text ="${b.title}"> 15 bộ phim Netflix được xem nhiều nhất từ trước tới nay</h5>
+                    <p class="fst-italic" th:text="${b.publishedAt}"> MotphimOctober 8, 2023</p>
+                    <p th:text="${b.content}">15 bộ phim Netflix được xem nhiều nhất từ trước tới nay
                         Motphim October 8, 2023
                         Là một trong những dịch vụ xem phim phổ biến và thành công nhất trên thế giới vào lúc này,
                         Netflix rõ ràng đã biết cách tạo nên tên tuổi cho mình theo năm tháng. Kể từ khi được thành lập
@@ -155,8 +113,6 @@
                 </div>
             </div>
         </div>
-
-    </div>
 
     </div>
 </section>

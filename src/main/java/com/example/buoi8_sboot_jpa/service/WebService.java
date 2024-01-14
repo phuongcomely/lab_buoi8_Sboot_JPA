@@ -1,7 +1,9 @@
 package com.example.buoi8_sboot_jpa.service;
 
+import com.example.buoi8_sboot_jpa.entity.Blog;
 import com.example.buoi8_sboot_jpa.entity.Movie;
 import com.example.buoi8_sboot_jpa.model.enums.MovieType;
+import com.example.buoi8_sboot_jpa.repository.BlogRepository;
 import com.example.buoi8_sboot_jpa.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class WebService {
     private final MovieRepository movieRepository;
+
+
 
     public Optional<Movie> getMovieByTypeAndIdAndSlug(MovieType movieType, int id, String  slug){
         return movieRepository.findByTypeAndIdAndSlug(movieType, id, slug);
@@ -40,8 +44,21 @@ public class WebService {
         PageRequest pageRequest = PageRequest.of(page - 1, size, Sort.by("view").descending()); // page trong jpa bắt đầu từ 0
         return movieRepository.findByStatus(status, pageRequest);
     }
-    public List<Movie> getMovieByType(MovieType movieType,  Integer page, Integer size){
+    public List<Movie> getMovieByTypeRelated(MovieType movieType,  Integer page, Integer size){
         PageRequest pageRequest = PageRequest.of(page - 1, size);
         return movieRepository.findByType(movieType, pageRequest);
     }
+    public List<Movie> getByTypeAndStatusAndRatingGreaterThanEqualAndIdNotOrderByRatingDescViewDescPublishedAtDesc(
+            MovieType type,
+            Boolean status,
+            Integer rating,
+            Integer id, Integer page, Integer size){
+        PageRequest pageRequest = PageRequest.of(page - 1, size);
+        return  movieRepository.findByTypeAndStatusAndRatingGreaterThanEqualAndIdNotOrderByRatingDescViewDescPublishedAtDesc(
+                type, status, rating, id, pageRequest);
+
+
+    }
+
+
 }
