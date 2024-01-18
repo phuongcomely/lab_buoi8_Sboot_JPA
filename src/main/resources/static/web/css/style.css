@@ -6,6 +6,21 @@ img {
     object-fit: cover;
 
 }
+.rating-container{
+    font-size: 24px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.star {
+    display: inline-block;
+}
+
+.star:hover,
+.star.active {
+    color: gold;
+}
+
 /*.rating-avatar img{*/
 /*    height: 50px;*/
 /*    width: 50px;*/

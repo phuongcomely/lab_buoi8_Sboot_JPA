@@ -2,10 +2,12 @@ package com.example.buoi8_sboot_jpa.controller;
 
 import com.example.buoi8_sboot_jpa.entity.Blog;
 import com.example.buoi8_sboot_jpa.entity.Movie;
+import com.example.buoi8_sboot_jpa.entity.Review;
 import com.example.buoi8_sboot_jpa.model.enums.MovieType;
 import com.example.buoi8_sboot_jpa.repository.BlogRepository;
 import com.example.buoi8_sboot_jpa.repository.MovieRepository;
 import com.example.buoi8_sboot_jpa.service.BlogService;
+import com.example.buoi8_sboot_jpa.service.ReviewService;
 import com.example.buoi8_sboot_jpa.service.WebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,7 +37,8 @@ public class WebController {
 
     @Autowired
     private BlogService blogService;
-
+    @Autowired
+    private ReviewService reviewService;
 
     @GetMapping("/")
     public String getHomePage(Model model){
@@ -63,8 +66,10 @@ public class WebController {
             Movie movie = optionalMovie.get();
 
             List<Movie> relatedMovies = webService.getByTypeAndStatusAndRatingGreaterThanEqualAndIdNotOrderByRatingDescViewDescPublishedAtDesc(movie.getType(),true,8,movie.getId(), page,size);
+            List<Review> relatedReview = reviewService.getReviewsOfMovie(movie.getId());
             model.addAttribute("movie", movie);
             model.addAttribute("relatedMovies", relatedMovies);
+            model.addAttribute("relatedReview", relatedReview);
             return "web/Movie-detail";
         } else {
             return "web/Movie-not-found"; // Điều hướng đến trang thông báo không tìm thấy nếu không có phim
