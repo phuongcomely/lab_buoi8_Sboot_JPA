@@ -66,10 +66,10 @@ public class WebController {
             Movie movie = optionalMovie.get();
 
             List<Movie> relatedMovies = webService.getByTypeAndStatusAndRatingGreaterThanEqualAndIdNotOrderByRatingDescViewDescPublishedAtDesc(movie.getType(),true,8,movie.getId(), page,size);
-            List<Review> relatedReview = reviewService.getReviewsOfMovie(movie.getId());
+            List<Review> reviews = reviewService.getReviewsOfMovie(movie.getId());
             model.addAttribute("movie", movie);
             model.addAttribute("relatedMovies", relatedMovies);
-            model.addAttribute("relatedReview", relatedReview);
+            model.addAttribute("reviews", reviews  );
             return "web/Movie-detail";
         } else {
             return "web/Movie-not-found"; // Điều hướng đến trang thông báo không tìm thấy nếu không có phim
@@ -116,5 +116,15 @@ public class WebController {
         } else {
             return "web/Blog-not-found"; // Điều hướng đến trang thông báo không tìm thấy nếu không có phim
         }
+    }
+
+    @GetMapping("/dang-nhap")
+    public String getLogin(){
+
+        return "web/login";
+    }
+    @GetMapping("/dang-ky")
+    public String getRegister(){
+        return "web/register";
     }
 }
